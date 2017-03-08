@@ -6,48 +6,63 @@ console.log("App Started");
 // IIFE
 (function() {
 
-    let mainNav = document.getElementById("mainNav");
-    let navbarHTML;
-    // step 1 = need a XHR elements
-    let navXHR = new XMLHttpRequest();
-    // step 2 - open a file
-    navXHR.open("GET", "../navbar.html", true);
-    //step 3 - send the XMLHttpRequest
-    navXHR.send();
-    //step 4 - list for readyState of 4 and server status of 200 onreadystatechange
-    navXHR.onreadystatechange = function() {
-        if(this.readyState === 4 && this.status === 200) {
-            // read the data
-            navbarHTML = this.responseText;
+    // loads the main navigation
+    function load_NavBar() {
+        let mainNav = document.getElementById("mainNav");
+        let navbarHTML;
+        // step 1 = need a XHR elements
+        let navXHR = new XMLHttpRequest();
+        // step 2 - open a file
+        navXHR.open("GET", "../navbar.html", true);
+        //step 3 - send the XMLHttpRequest
+        navXHR.send();
+        //step 4 - list for readyState of 4 and server status of 200 onreadystatechange
+        navXHR.onreadystatechange = function() {
+            if(this.readyState === 4 && this.status === 200) {
+                // read the data
+                navbarHTML = this.responseText;
+            }
+        }
+        // step 5 - wait until the nav bar file finished loading
+        navXHR.addEventListener("load", function() {
+            mainNav.innerHTML = navbarHTML;
+            switch (document.title) {
+                case "Home":
+                    let homelink = document.getElementById("homelink");
+                    homelink.setAttribute("class", "active");
+                    break;
+                case "Project":
+                    let projectslink = document.getElementById("projectslink");
+                    projectslink.setAttribute("class", "active");
+                    break;
+                case "Contact":
+                    let contactslink = document.getElementById("contactslink");
+                    contactslink.setAttribute("class", "active");
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
+
+    // Loads the page content for each page
+    function load_Page_Content() {
+        /* INTERPOLATION */
+        // console.info(`Page title: ${document.title}`); 
+        /* --------------------------------------------- */
+        if(document.title == "Home") {
+            load_Home_page();   
+        } // end if Home
+        else if (document.title == "Project") {
+            load_Project_page();
+        }
+        else if (document.title == "Contact") {
+            load_Contact_page();
         }
     }
-    // step 5 - wait until the nav bar file finished loading
-    navXHR.addEventListener("load", function() {
-        mainNav.innerHTML = navbarHTML;
-        switch (document.title) {
-            case "Home":
-                let homelink = document.getElementById("homelink");
-                homelink.setAttribute("class", "active");
-                break;
-            case "Project":
-                let projectslink = document.getElementById("projectslink");
-                projectslink.setAttribute("class", "active");
-                break;
-            case "Contact":
-                let contactslink = document.getElementById("contactslink");
-                contactslink.setAttribute("class", "active");
-                break;
-            default:
-                break;
-        }
-    });
 
-
-    /* INTERPOLATION */
-    // console.info(`Page title: ${document.title}`); 
-    /* --------------------------------------------- */
-    if(document.title == "Home") {
-
+    // Loads the Home page
+    function load_Home_page() {
         let data = {};
         // step 1 - instatiate an XHR object
         let XHR = new XMLHttpRequest();
@@ -79,10 +94,10 @@ console.log("App Started");
                 gameListBody.appendChild(newRow);
             }, this);
         });
-         
-    } // end if Home
-    else if (document.title == "Project") {
-       
+    }
+
+    // Loads the Projects page
+    function load_Project_page() {
         // step 1 - setup references to the elements you need to hook into
         let hideButton = document.getElementById("hideButton");
         let halfSizeButton = document.getElementById("halfSizeButton");
@@ -90,7 +105,7 @@ console.log("App Started");
         let showButton = document.getElementById("showButton");
         let firstProjectImg = document.getElementById("firstProjectImg");
 
-         // OPTION 1 //
+        // OPTION 1 //
         // step 2 - setup event listeners (register event listeners) for each elements
         // hideButton.addEventListener("click", function() {
         //     firstProjectImg.style.display = 'none'; 
@@ -137,11 +152,28 @@ console.log("App Started");
                 }
             });
         }, this);
+    }
+
+    // Loads the Contact page
+    function load_Contact_page() {
 
     }
-    else if (document.title == "Contact") {
-
+    // start method / APP entry point
+    function Start () {
+        load_NavBar();
+        load_Page_Content();
     }
+
+    
+
+
+
+
+
+    
+
+    // call the Start function when the window loads
+    window.onload = Start; // Start is the callback function / event handler
 
 })();
 
