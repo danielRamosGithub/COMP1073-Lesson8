@@ -45,22 +45,6 @@ console.log("App Started");
         });
     }
 
-    // Loads the page content for each page
-    function load_Page_Content() {
-        /* INTERPOLATION */
-        // console.info(`Page title: ${document.title}`); 
-        /* --------------------------------------------- */
-        if(document.title == "Home") {
-            load_Home_page();   
-        } // end if Home
-        else if (document.title == "Project") {
-            load_Project_page();
-        }
-        else if (document.title == "Contact") {
-            load_Contact_page();
-        }
-    }
-
     // Loads the Home page
     function load_Home_page() {
         let data = {};
@@ -94,6 +78,22 @@ console.log("App Started");
                 gameListBody.appendChild(newRow);
             }, this);
         });
+    }
+    
+    // Loads the page content for each page
+    function load_Page_Content() {
+        /* INTERPOLATION */
+        // console.info(`Page title: ${document.title}`); 
+        /* --------------------------------------------- */
+        if(document.title == "Home") {
+            load_Home_page();   
+        } // end if Home
+        else if (document.title == "Project") {
+            load_Project_page();
+        }
+        else if (document.title == "Contact") {
+            load_Contact_page();
+        }
     }
 
     // Loads the Projects page
