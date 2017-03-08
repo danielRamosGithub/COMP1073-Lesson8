@@ -1,0 +1,14 @@
+/* custom css lives here */
+
+body {
+    padding-bottom: 70px;
+}
+
+.divider {
+    margin-top: 10px;
+}
+
+#firstProjectImg {
+    /*max-height: 200px;*/
+    /*width: 300px;*/
+}
